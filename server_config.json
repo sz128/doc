@@ -1,0 +1,50 @@
+{
+  "log": {
+    "loglevel": "warning",
+    "access": "/dev/null",
+    "error": "/dev/null"
+  },
+  "inbounds": [{
+    "listen":"127.0.0.1",
+    "port": 39388,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "c103bd73-32fc-4395-9707-32ad17e6220f",
+          "level": 1,
+          "alterId": 0
+        }
+      ]
+    },
+	"streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+        "path": "/bannedbook"
+        }
+    }
+  }],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {},
+      "tag": "allowed"
+    },
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "geoip:private"
+        ],
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}
